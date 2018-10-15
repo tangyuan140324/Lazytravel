@@ -1,0 +1,2 @@
+# Lazytravel
+Plan your trip
