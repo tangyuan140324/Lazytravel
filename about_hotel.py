@@ -108,18 +108,17 @@ def join_hotel_url(cityId,locationInfo):
     else:
         return "The length of hotel_nameList is not equal to hotel_priceList."
 
-if __name__=='__main__':
-    city = '三亚'
-    zone = '大东海'
-    location = ''
-    sl = ''
-    metro = ''
-
+def main_hotel(city,zone = '',location = '',sl = '',metro = ''):
+    city = city#'三亚'
+    zone = zone#'大东海'
+    location = location#''w
+    sl = sl
+    metro = metro
     '''
-    获取城市信息编号。
-    '''
+        获取城市信息编号。
+        '''
     r = get_city_id()
-    pingy = re.findall(r'data:"(.*?)\|([\u4e00-\u9fa5]+)\|',r)
+    pingy = re.findall(r'data:"(.*?)\|([\u4e00-\u9fa5]+)\|', r)
     pingy_table = dict(pingy)
     dict_new = {value: key for key, value in pingy_table.items()}
     pattern = u'([\u4e00-\u9fa5]+)\|([0-9]+)'
@@ -135,26 +134,27 @@ if __name__=='__main__':
     part_one = json_data['zoneId']['data']
     lix = []
     for item in part_one:
-        lix.append((item['name'], 'zone'+item['id']))
+        lix.append((item['name'], 'zone' + item['id']))
+
     part_two = json_data['locationId']['data']
     for item in part_two:
-        lix.append((item['name'], "location"+item['id']))
+        lix.append((item['name'], "location" + item['id']))
     part_three = json_data['sl']['data']
     for item in part_three:
-        lix.append((item['name'], "sl"+item['id']))
+        lix.append((item['name'], "sl" + item['id']))
     try:
         part_four = json_data['metroId']['data']
         for item in part_four:
             lix.append((item['name'], "metro" + item['id']))
     except KeyError:
-        lix.append(('metro',"NO METOR INFOMATION !"))
+        lix.append(('metro', "NO METOR INFOMATION !"))
         print("NO METOR INFOMATION !")
     regiony_comparison_table = dict(lix)
-    #print(regiony_comparison_table)
+    print(regiony_comparison_table)
     '''
     拼接最后详细酒店信息的url。
     '''
-    cityId = dict_new[city]+str(city_comparison_table[city])
+    cityId = dict_new[city] + str(city_comparison_table[city])
     locationInfo = []
     if zone != '':
         locationInfozone = regiony_comparison_table[zone]
@@ -171,4 +171,16 @@ if __name__=='__main__':
             locationInfo.append(locationInfometro)
     locationInfoStr = ''.join(locationInfo)
     hotel_result = join_hotel_url(cityId, locationInfoStr)
+    print(hotel_result)
+    return hotel_result
+
+if __name__=='__main__':
+    city = '三亚'
+    zone = '大东海'
+    location = ''
+    sl = ''
+    metro = ''
+    main_hotel(city,zone)
+
+
     pass

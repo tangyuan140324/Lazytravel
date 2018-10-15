@@ -19,12 +19,12 @@ def get_plane_num():
     lix = []
     for item in li:
         city_name = item.split('(')[0]
-        city_number = re.findall(r'\(([A-Z]+)\)',item)[0]
-        lix.append((city_name,city_number))
+        city_number = re.findall(r'\(([A-Z]+)\)',item)
+        lix.append((city_name,''.join(city_number)))
     station = dict(lix)
     return station
 
-def get_query_url(text,depart_date,origin_city,destination_city):
+def get_query_planeurl(text,depart_date,origin_city,destination_city):
     # 城市名代码查询字典
     # key：城市名 value：城市代码
     try:
@@ -45,7 +45,7 @@ def get_query_url(text,depart_date,origin_city,destination_city):
 
     return url
 
-def query_train_info(url):
+def query_plane_info(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36',
         'Host': 'flights.ctrip.com', 'Referer': 'http://flights.ctrip.com/booking/TAO-SJW-day-1.html?DDate1=2018-10-16'}
@@ -72,15 +72,15 @@ def query_train_info(url):
         lix.append(apbn)
         price_list = [each['p'] for each in flight_list[i]['scs'] if each['hotel'] is None]
         lix.append(price_list)
-    print(lix)
+    #print(lix)
+    return lix
 
 
 if __name__ == '__main__':
     origin_city = '北京'
     destination_city = '三亚'
-    depart_date = '2018-10-12'
+    depart_date = '2018-10-17'
     text = get_plane_num()
-    url = get_query_url(text, depart_date, origin_city, destination_city)
-    print(url)
-    query_train_info(url)
+    url = get_query_planeurl(text, depart_date, origin_city, destination_city)
+    plane_info = query_plane_info(url)
     pass

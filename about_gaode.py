@@ -49,34 +49,16 @@ def use_gaode(x1,y1,x2,y2):
     pass
 
 def gaode_info(keywords,city):
-    url = 'https://restapi.amap.com/v3/place/text?key={}&keywords={}&city={}&children=1&offset=20&page=1&extensions=all'.format(key,keywords,city)
+    url = 'https://restapi.amap.com/v3/place/text?key={}&keywords={}&city={}&children=1&offset=20&page=1&' \
+          'extensions=all'.format(key,keywords,city)
     res = requests.get(url)
     info = res.json()
     return info
-if __name__=='__main__':
-    # or_address = '上海站'
-    # de_address = '上海迪士尼'
-    # or_url = get_urt(or_address)
-    # return_json_or = get_json(or_url)
-    # de_url = get_urt(de_address)
-    # return_json_de = get_json(de_url)
-    # print(return_json_or)
-    # '''
-    # return_json = {'status': 0, 'result': {'location': {'lng': 121.44296255460806, 'lat': 28.683587738938737}, 'precise': 1, 'confidence': 80, 'comprehension': 100, 'level': '购物'}}
-    # x1 = '121.455739'
-    # y1 = '31.249563'
-    # '''
-    # x1 = str(return_json_or['result']['location']['lng'])
-    # y1 = str(return_json_or['result']['location']['lat'])
-    # x2 = str(return_json_de['result']['location']['lng'])
-    # y2 = str(return_json_or['result']['location']['lat'])
-    # print(x1,y1,x2,y2)
-    # data = use_gaode(x1,y1,x2,y2)
-    # print(data)
-    print('__________________________________________________________________')
-    or_address = '南京南站'
-    de_address = '玄武湖'
-    city = '南京'
+
+def gaode_main(or_address,de_address,city):
+    or_address = or_address#'三亚凤凰机场'
+    de_address = de_address#'三亚四季海庭酒店'
+    city = city#'三亚'
     '''
     获取出发地的经纬度。
     '''
@@ -99,17 +81,41 @@ if __name__=='__main__':
     iwant = data['data']['buslist']  # [0]#['expense']
     taxitime = data['data']['taxitime']
     taxicost = data['data']['taxicost']
-    lix = []
+    bus_lix = []
     tmp_taxi = {}
     tmp_taxi['taxitime'] = taxitime
     tmp_taxi['taxicost'] = taxicost
-    lix.append(tmp_taxi)
+    bus_lix.append(tmp_taxi)
     for item in iwant:
         tmp_bus = {}
         tmp_bus['expense'] = item['expense']
         tmp_bus['expensetime'] = item['expensetime']
         tmp_bus['allLength'] = item['allLength']
         tmp_bus['allfootlength'] = item['allfootlength']
-        lix.append(tmp_bus)
-    print(lix)
+        bus_lix.append(tmp_bus)
+    return bus_lix
+if __name__=='__main__':
+    # or_address = '上海站'
+    # de_address = '上海迪士尼'
+    # or_url = get_urt(or_address)
+    # return_json_or = get_json(or_url)
+    # de_url = get_urt(de_address)
+    # return_json_de = get_json(de_url)
+    # print(return_json_or)
+    # '''
+    # return_json = {'status': 0, 'result': {'location': {'lng': 121.44296255460806, 'lat': 28.683587738938737}, 'precise': 1, 'confidence': 80, 'comprehension': 100, 'level': '购物'}}
+    # x1 = '121.455739'
+    # y1 = '31.249563'
+    # '''
+    # x1 = str(return_json_or['result']['location']['lng'])
+    # y1 = str(return_json_or['result']['location']['lat'])
+    # x2 = str(return_json_de['result']['location']['lng'])
+    # y2 = str(return_json_or['result']['location']['lat'])
+    # print(x1,y1,x2,y2)
+    # data = use_gaode(x1,y1,x2,y2)
+    # print(data)
+    # print('__________________________________________________________________')
+    # or_address = '三亚凤凰机场'
+    # de_address = '三亚四季海庭酒店'
+    # city = '三亚'
     pass
