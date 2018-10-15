@@ -85,6 +85,7 @@ def query_train_info(url, text,origin_city,destination_city):
     }
     try:
         r = requests.get(url, verify=False)
+        print(r.json())
         # 获取返回的json数据里的data字段的result结果
         raw_trains = r.json()['data']['result']
         for raw_train in raw_trains:
@@ -124,12 +125,13 @@ def query_train_info(url, text,origin_city,destination_city):
                 train_no, from_station_name, to_station_name, start_time, arrive_time, time_fucked_up, first_class_seat,
                 second_class_seat, soft_sleep, hard_sleep, hard_seat, no_seat))
             info_list.append(info)
+        print(info_list)
         return info_list
     except:
         return ' 输出信息有误，请重新输入'
 
 #  获取全国各地车站编码
-text = getStation()
+# text = getStation()
 # url = get_query_url(text)
 # lis = query_train_info(url, text)
 
