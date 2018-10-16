@@ -157,17 +157,23 @@ def main_hotel(city,zone = '',location = '',sl = '',metro = ''):
     location = location#''
     sl = sl
     metro = metro
-    r = get_city_id()
-    pingy = re.findall(r'data:"(.*?)\|([\u4e00-\u9fa5]+)\|', r)
-    pingy_table = dict(pingy)
-    dict_new = {value: key for key, value in pingy_table.items()}
-    pattern = u'([\u4e00-\u9fa5]+)\|([0-9]+)'
-    result = re.findall(pattern, r)
-    city_comparison_table = dict(result)
+    # r = get_city_id()
+    # pingy = re.findall(r'data:"(.*?)\|([\u4e00-\u9fa5]+)\|', r)
+    # pingy_table = dict(pingy)
+    # dict_new = {value: key for key, value in pingy_table.items()}
+    # pattern = u'([\u4e00-\u9fa5]+)\|([0-9]+)'
+    # result = re.findall(pattern, r)
+    # city_comparison_table = dict(result)
     regiony_comparison_table,json_info = get_json_info(city)
     '''
     拼接最后详细酒店信息的url。
     '''
+    with open('pingyin_city.txt', 'r') as f:
+        data_pingyi = f.read()
+    dict_new = json.loads(data_pingyi)
+    with open('number_city.txt', 'r') as g:
+        data_number = g.read()
+    city_comparison_table = json.loads(data_number)
     cityId = dict_new[city] + str(city_comparison_table[city])
     locationInfo = []
     if zone != '':
@@ -193,6 +199,7 @@ if __name__=='__main__':
     location = ''
     sl = ''
     metro = ''
+
     hotel_result = main_hotel(city,zone)
     print(hotel_result)
 
