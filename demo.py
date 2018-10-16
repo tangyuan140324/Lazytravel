@@ -15,12 +15,13 @@ str1 = json.dumps(json_part1,ensure_ascii=False)
 str2 = json.dumps(json_part2,ensure_ascii=False)
 with open('pingyin_city.txt','w') as f:
     f.write(str1)
-#
-# with open('number_city.txt','w') as g:
-#     g.write(str2)
 
-# with open('pingyin_city.txt','r') as f:
-#     data = f.read()
+with open('number_city.txt','w') as g:
+    g.write(str2)
+
+# with open('pingyin1_city.txt','r') as f:
+#     data = f.read().encode('utf-8')
+#
 #
 # dict_new = json.loads(data)
 # print(dict_new)
