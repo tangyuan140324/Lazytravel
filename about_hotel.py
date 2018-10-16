@@ -188,12 +188,13 @@ def main_hotel(city,zone = '',location = '',sl = '',metro = ''):
     return hotel_result
 
 if __name__=='__main__':
-    # city = '三亚'
-    # zone = '大东海'
-    # location = ''
-    # sl = ''
-    # metro = ''
-    # hotel_result = main_hotel(city,zone)
+    city = '三亚'
+    zone = '大东海'
+    location = ''
+    sl = ''
+    metro = ''
+    hotel_result = main_hotel(city,zone)
+    print(hotel_result)
 
 
     pass
