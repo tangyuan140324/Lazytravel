@@ -50,48 +50,9 @@ def get_region_id(cityNumber):
     return response.text
 
 def join_hotel_url(cityId,locationInfo):
-    # url = "http://hotels.ctrip.com/hotel/shanghai2/location112star5"
-    # payload = 'NOVIEWSTATE=%2FwEPDwULLTE5MjE3MzkxNzRkZAAyEigXGsO8%2FCVgUkQcbd%2FmaqKG6oAvrEy5FbQex5uf&' \
-    #           '__VIEWSTATEGENERATOR=AEF82FC0&' \
-    #           'hotelChoose=on&' \
-    #           'CityName=%E4%B8%8A%E6%B5%B7&' \
-    #           'cityId=2&' \
-    #           'cityPY=shanghai&' \
-    #           'SSH_CheckIn=2018-10-12&' \
-    #           'HotelCityName=%E4%B8%8A%E6%B5%B7&' \
-    #           'checkIn=2018-10-12&' \
-    #           'checkOut=2018-10-13&' \
-    #           'hotellevel=5&' \
-    #           'keywordNew=%E9%9D%99%E5%AE%89%E5%8C%BA&' \
-    #           'RoomGuestCount=1%2C1%2C0&' \
-    #           'hasListForInitHotHotel=&' \
-    #           '_releaseNo_=2018-10-11-15-26-57&' \
-    #           '__action=%2FDomestic%2FShowHotelList.aspx&' \
-    #           'cityId=2&' \
-    #           'cityPY=Shanghai&' \
-    #           'positionArea=Location&' \
-    #           'positionId=112&' \
-    #           'keyword=%E9%9D%99%E5%AE%89%E5%8C%BA&' \
-    #           'requestTravelMoney=&isfromindex=1'
-    # headers = {
-    #     'host': "hotels.ctrip.com",
-    #     'connection': "keep-alive",
-    #     'content-length': "586",
-    #     'cache-control': "no-cache",
-    #     'origin': "http://hotels.ctrip.com",
-    #     'upgrade-insecure-requests': "1",
-    #     'content-type': "application/x-www-form-urlencoded",
-    #     'user-agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
-    #     'accept': "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-    #     'referer': "http://hotels.ctrip.com/",
-    #     'accept-encoding': "gzip, deflate",
-    #     'accept-language': "zh-CN,zh;q=0.9",
-    # }
-    # response = requests.request("POST", url, data=payload, headers=headers)
-
     url = 'http://hotels.ctrip.com/hotel/{}/{}'.format(cityId,locationInfo)
     res = requests.get(url)
-    soup = BeautifulSoup(res.text,'lxml')
+    soup = BeautifulSoup(res.text,'html.parser')
     hotels_info = soup.find('div',id='hotel_list')
     name_infos = hotels_info.findAll('h2',class_='hotel_name')
     prices = soup.findAll('span',class_='J_price_lowList')
