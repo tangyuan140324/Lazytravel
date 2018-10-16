@@ -38,18 +38,22 @@ urban_transport = ''
 
 
 if __name__ == '__main__':
-    depart_date = '2018-10-16'
+    depart_date = '2018-10-18'
     origin_city = '南京'
     destination_city = '成都'
-    text = getStation()
+    with open('code_train.txt', 'r') as j:
+        text1 = j.read()  # .encode('utf-8')
+    text = json.loads(text1)
     url = get_query_url(text,depart_date,origin_city,destination_city)
     lis = query_train_info(url, text,origin_city,destination_city)
-    while True:
-        if lis == ' 输出信息有误，请重新输入':
-            lis = query_train_info(url, text,origin_city,destination_city)
-        else:
-            for item in lis:
-                pass
-            print(lis)
-            break
-    pass
+    for i in lis:
+        print(i)
+    # while True:
+    #     if lis == ' 输出信息有误，请重新输入':
+    #         lis = query_train_info(url, text,origin_city,destination_city)
+    #     else:
+    #         for item in lis:
+    #             pass
+    #         print(lis)
+    #         break
+    # pass
