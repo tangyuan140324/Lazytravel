@@ -14,7 +14,7 @@ from train_12306 import getStation, get_query_url, query_train_info
 
 if __name__ == '__main__':
     json_1 = {"depart_date": "2018-10-18", "back_date": "2018-10-21", "origin_city": "南京",
-              "destination_city": "重庆", "trip_mode": "plane"}
+              "destination_city": "重庆", "trip_mode": "train"}
 
     depart_date = json_1['depart_date']
     origin_city = json_1['origin_city']

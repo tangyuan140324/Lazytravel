@@ -131,16 +131,7 @@ def main_hotel(city,zone = '',location = '',sl = '',metro = ''):
     '''
     拼接最后详细酒店信息的url。
     '''
-<<<<<<< HEAD
-    with open('pingyin_city.txt', 'r') as f:
-        data_pingyi = f.read()#.encode('utf-8')
-    dict_new = json.loads(data_pingyi)
-    with open('number_city.txt', 'r') as g:
-        data_number = g.read()#.encode('utf-8')
-    city_comparison_table = json.loads(data_number)
-=======
 
->>>>>>> f9cda455a6212f73444924e362bcbed8c111d440
     cityId = dict_new[city] + str(city_comparison_table[city])
     locationInfo = []
     if zone != '':
