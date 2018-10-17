@@ -131,8 +131,8 @@ def query_train_info(url, text,origin_city,destination_city):
 
 #  获取全国各地车站编码
 #text = getStation()
-with open('code_train.txt', 'r') as j:
-    text = j.read()#.encode('utf-8')
+# with open('code_train.txt', 'r', encoding='UTF-8') as j:
+#     text = j.read()#.encode('utf-8')
 # url = get_query_url(text)
 # lis = query_train_info(url, text)
 

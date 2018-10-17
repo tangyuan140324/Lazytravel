@@ -41,10 +41,11 @@ if __name__ == '__main__':
     depart_date = '2018-10-18'
     origin_city = '南京'
     destination_city = '成都'
-    with open('code_train.txt', 'r') as j:
+    with open('code_train.txt', 'r', encoding='UTF-8') as j:
         text1 = j.read()  # .encode('utf-8')
     text = json.loads(text1)
     url = get_query_url(text,depart_date,origin_city,destination_city)
+    print(url)
     lis = query_train_info(url, text,origin_city,destination_city)
     for i in lis:
         print(i)

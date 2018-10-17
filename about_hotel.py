@@ -10,10 +10,10 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
-with open('pingyin_city.txt', 'r') as f:
+with open('pingyin_city.txt', 'r', encoding='UTF-8') as f:
     data_pingyi = f.read()  # .encode('utf-8')
 dict_new = json.loads(data_pingyi)
-with open('number_city.txt', 'r') as g:
+with open('number_city.txt', 'r', encoding='UTF-8') as g:
     data_number = g.read()  # .encode('utf-8')
 city_comparison_table = json.loads(data_number)
 

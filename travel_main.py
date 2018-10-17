@@ -14,15 +14,16 @@ from train_12306 import getStation, get_query_url, query_train_info
 
 if __name__ == '__main__':
     json_1 = {"depart_date": "2018-10-18", "back_date": "2018-10-21", "origin_city": "南京",
-              "destination_city": "重庆", "trip_mode": "plane"}
+              "destination_city": "重庆", "trip_mode": "train"}
 
     depart_date = json_1['depart_date']
     origin_city = json_1['origin_city']
     destination_city = json_1['destination_city']
     trip_mode = json_1['trip_mode']
     if trip_mode == "train":
-        with open('code_train.txt', 'r') as j:
-            text = j.read()
+        with open('code_train.txt', 'r', encoding='UTF-8') as j:
+            text1 = j.read()
+        text = json.loads(text1)
         url = get_query_url(text, depart_date, origin_city, destination_city)
         lis = query_train_info(url, text, origin_city, destination_city)
         i = 0
@@ -36,7 +37,7 @@ if __name__ == '__main__':
                 print(train_info)
                 break
     if  trip_mode == "plane":
-        with open('plane_code.txt', 'r') as l:
+        with open('plane_code.txt', 'r', encoding='UTF-8') as l:
             text = l.read()
         text1 = json.loads(text)
         url = get_query_planeurl(text1, depart_date, origin_city, destination_city)
