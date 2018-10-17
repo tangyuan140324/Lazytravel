@@ -10,23 +10,29 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
+with open('pingyin_city.txt', 'r') as f:
+    data_pingyi = f.read()  # .encode('utf-8')
+dict_new = json.loads(data_pingyi)
+with open('number_city.txt', 'r') as g:
+    data_number = g.read()  # .encode('utf-8')
+city_comparison_table = json.loads(data_number)
 
-def get_city_id():
-    url = "http://hotels.ctrip.com/Domestic/Tool/AjaxGetCitySuggestion.aspx"
-    headers = {
-        'host': "hotels.ctrip.com",
-        'connection': "keep-alive",
-        'user-agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
-        'accept': "*/*",
-        'referer': "http://hotels.ctrip.com/",
-        'accept-encoding': "gzip, deflate",
-        'accept-language': "zh-CN,zh;q=0.9",
-        #'cookie': "Union=SID=155952&AllianceID=4897&OUID=baidu81|index|||; Session=SmartLinkCode=U155952&SmartLinkKeyWord=&SmartLinkQuary=&SmartLinkHost=&SmartLinkLanguage=zh; _abtest_userid=bb253239-c268-4792-b2f9-b6370562d7b0; gad_city=b82f0154257a2ce862c5ae5da9f81b79; traceExt=campaign=CHNbaidu81&adid=index; _gat=1; ASP.NET_SessionSvc=MTAuMjguMTEyLjE1NHw5MDkwfGppbnFpYW98ZGVmYXVsdHwxNTM3NDk5NzE1NjQy; IntHotelCityID=splitsplitsplit2018-10-13split2018-10-14splitsplitsplit0splitsplit; __utmt=1; __utma=13090024.1562554692.1539309419.1539309424.1539309424.1; __utmb=13090024.2.10.1539309424; __utmc=13090024; __utmz=13090024.1539309424.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); _RF1=49.77.226.81; _RSG=SlKIJMnzFlDtiXmtcQOEc8; _RDG=28b48f42c0678c21f919f2811eae25d510; _RGUID=dbcff715-9349-4bdc-898e-61a9b7c21b37; _ga=GA1.2.1562554692.1539309419; _gid=GA1.2.1420859181.1539309419; Mkt_UnionRecord=%5B%7B%22aid%22%3A%224897%22%2C%22timestamp%22%3A1539309428441%7D%5D; __zpspc=9.1.1539309419.1539309428.3%231%7Cbaidu%7Ccpc%7Cbaidu81%7C%25E6%2590%25BA%25E7%25A8%258B%7C%23; _jzqco=%7C%7C%7C%7C1539309419509%7C1.252987513.1539309419399.1539309422791.1539309428459.1539309422791.1539309428459.0.0.0.3.3; _bfi=p1%3D102001%26p2%3D0%26v1%3D4%26v2%3D0; MKT_Pagesource=PC; appFloatCnt=1; manualclose=1; _bfa=1.1539309416714.1eh6l2.1.1539309416714.1539309416714.1.5; _bfs=1.5",
-        'cache-control': "no-cache"
-        }
-    response = requests.request("GET", url, headers=headers)
-    #print(response.text)
-    return response.text
+# def get_city_id():
+#     url = "http://hotels.ctrip.com/Domestic/Tool/AjaxGetCitySuggestion.aspx"
+#     headers = {
+#         'host': "hotels.ctrip.com",
+#         'connection': "keep-alive",
+#         'user-agent': "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
+#         'accept': "*/*",
+#         'referer': "http://hotels.ctrip.com/",
+#         'accept-encoding': "gzip, deflate",
+#         'accept-language': "zh-CN,zh;q=0.9",
+#         #'cookie': "Union=SID=155952&AllianceID=4897&OUID=baidu81|index|||; Session=SmartLinkCode=U155952&SmartLinkKeyWord=&SmartLinkQuary=&SmartLinkHost=&SmartLinkLanguage=zh; _abtest_userid=bb253239-c268-4792-b2f9-b6370562d7b0; gad_city=b82f0154257a2ce862c5ae5da9f81b79; traceExt=campaign=CHNbaidu81&adid=index; _gat=1; ASP.NET_SessionSvc=MTAuMjguMTEyLjE1NHw5MDkwfGppbnFpYW98ZGVmYXVsdHwxNTM3NDk5NzE1NjQy; IntHotelCityID=splitsplitsplit2018-10-13split2018-10-14splitsplitsplit0splitsplit; __utmt=1; __utma=13090024.1562554692.1539309419.1539309424.1539309424.1; __utmb=13090024.2.10.1539309424; __utmc=13090024; __utmz=13090024.1539309424.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); _RF1=49.77.226.81; _RSG=SlKIJMnzFlDtiXmtcQOEc8; _RDG=28b48f42c0678c21f919f2811eae25d510; _RGUID=dbcff715-9349-4bdc-898e-61a9b7c21b37; _ga=GA1.2.1562554692.1539309419; _gid=GA1.2.1420859181.1539309419; Mkt_UnionRecord=%5B%7B%22aid%22%3A%224897%22%2C%22timestamp%22%3A1539309428441%7D%5D; __zpspc=9.1.1539309419.1539309428.3%231%7Cbaidu%7Ccpc%7Cbaidu81%7C%25E6%2590%25BA%25E7%25A8%258B%7C%23; _jzqco=%7C%7C%7C%7C1539309419509%7C1.252987513.1539309419399.1539309422791.1539309428459.1539309422791.1539309428459.0.0.0.3.3; _bfi=p1%3D102001%26p2%3D0%26v1%3D4%26v2%3D0; MKT_Pagesource=PC; appFloatCnt=1; manualclose=1; _bfa=1.1539309416714.1eh6l2.1.1539309416714.1539309416714.1.5; _bfs=1.5",
+#         'cache-control': "no-cache"
+#         }
+#     response = requests.request("GET", url, headers=headers)
+#     #print(response.text)
+#     return response.text
 
 def get_region_id(cityNumber):
     url = "http://hotels.ctrip.com/Domestic/Tool/AjaxGetHotKeyword.aspx"
@@ -73,17 +79,13 @@ def get_json_info(city):
     '''
     获取城市信息编号。
     '''
-    r = get_city_id()
-    # pingy = re.findall(r'data:"(.*?)\|([\u4e00-\u9fa5]+)\|', r)
-    # pingy_table = dict(pingy)
-    # dict_new = {value: key for key, value in pingy_table.items()}
-    pattern = u'([\u4e00-\u9fa5]+)\|([0-9]+)'
-    result = re.findall(pattern, r)
-    city_comparison_table = dict(result)
+
     '''
         获取行政区域、热门商圈等信息编号。
         '''
     cityNumber = city_comparison_table[city]
+    # print('------------------------cityNumber---------------------')
+    # print(cityNumber)
     data = get_region_id(cityNumber)
     info = data.split('.jsonpResponse.suggestion=')[1]
     json_data = json.loads(info)
@@ -129,12 +131,16 @@ def main_hotel(city,zone = '',location = '',sl = '',metro = ''):
     '''
     拼接最后详细酒店信息的url。
     '''
+<<<<<<< HEAD
     with open('pingyin_city.txt', 'r') as f:
         data_pingyi = f.read()#.encode('utf-8')
     dict_new = json.loads(data_pingyi)
     with open('number_city.txt', 'r') as g:
         data_number = g.read()#.encode('utf-8')
     city_comparison_table = json.loads(data_number)
+=======
+
+>>>>>>> f9cda455a6212f73444924e362bcbed8c111d440
     cityId = dict_new[city] + str(city_comparison_table[city])
     locationInfo = []
     if zone != '':

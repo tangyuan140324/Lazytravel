@@ -5,7 +5,7 @@
 import re
 import requests
 import json
-from bs4 import BeautifulSoup
+import time
 
 
 def get_plane_num():
@@ -48,30 +48,30 @@ def get_query_planeurl(text,depart_date,origin_city,destination_city):
 def query_plane_info(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36',
-        'Host': 'flights.ctrip.com', 'Referer': 'http://flights.ctrip.com/booking/TAO-SJW-day-1.html?DDate1=2018-10-16'}
+        'Host': 'flights.ctrip.com', 'Referer': 'http://flights.ctrip.com/booking/TAO-SJW-day-1.html?DDate1={}'.format(time.strftime("%Y-%m-%d", time.localtime()))}
     res = requests.get(url,headers=headers)
     return_json = res.json()
-    #return_data = json.loads(return_json, encoding='gbk')
-    #print(return_json)
     flight_list = return_json['fis']
     flight_nums = len(flight_list)
     lix = []
     als = return_json['als']
     for i in range(flight_nums):
+        tmp = {}
         airline = flight_list[i]['alc']
-        lix.append(als[airline])
+        tmp['airline'] = als[airline]
         flight_no = flight_list[i]['fn']
-        lix.append(flight_no)
+        tmp['flight_no'] = flight_no
         begin_time = flight_list[i]['dt']
-        lix.append(begin_time)
+        tmp['begin_time'] = begin_time
         arrive_time = flight_list[i]['at']
-        lix.append(arrive_time)
+        tmp['arrive_time'] = arrive_time
         dpbn = flight_list[i]['dpbn']
-        lix.append(dpbn)
+        tmp['dpbn'] = dpbn
         apbn = flight_list[i]['apbn']
-        lix.append(apbn)
+        tmp['apbn'] = apbn
         price_list = [each['p'] for each in flight_list[i]['scs'] if each['hotel'] is None]
-        lix.append(price_list)
+        tmp['price_list'] = price_list
+        lix.append(tmp)
     #print(lix)
     return lix
 
@@ -79,8 +79,11 @@ def query_plane_info(url):
 if __name__ == '__main__':
     origin_city = '北京'
     destination_city = '三亚'
-    depart_date = '2018-10-17'
-    text = get_plane_num()
-    url = get_query_planeurl(text, depart_date, origin_city, destination_city)
+    depart_date = '2018-10-18'
+    with open('plane_code.txt', 'r') as l:
+        text = l.read()
+    text1 = json.loads(text)
+    url = get_query_planeurl(text1, depart_date, origin_city, destination_city)
     plane_info = query_plane_info(url)
+    print(plane_info)
     pass

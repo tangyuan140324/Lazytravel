@@ -75,7 +75,7 @@ def gaode_main(or_address,de_address,city):
     location_list_de = location_de.split(',')
     x2 = location_list_de[0]
     y2 = location_list_de[1]
-    print(x1,y1,x2,y2)
+    #print(x1,y1,x2,y2)
     data = use_gaode(x1, y1, x2, y2)
     #print(data)
     iwant = data['data']['buslist']  # [0]#['expense']
