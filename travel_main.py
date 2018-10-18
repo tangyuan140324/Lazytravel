@@ -22,20 +22,26 @@ if __name__ == '__main__':
     trip_mode = json_1['trip_mode']
     if trip_mode == "train":
         with open('code_train.txt', 'r', encoding='UTF-8') as j:
-            text1 = j.read()
+            text1 = j.read()  # .encode('utf-8')
         text = json.loads(text1)
+        with open('train_KVchage.txt', 'r') as u:
+            infod = u.read()
+        com_table = json.loads(infod)
         url = get_query_url(text, depart_date, origin_city, destination_city)
-        lis = query_train_info(url, text, origin_city, destination_city)
-        i = 0
-        while True:
-            if lis == ' 输出信息有误，请重新输入' and i < 6:
-                lis = query_train_info(url, text, origin_city, destination_city)
-                i+=1
-            else:
-                train_info = lis
-                print('--------------------train_info-------------------------')
-                print(train_info)
-                break
+        print(url)
+        train_info = query_train_info(depart_date, url, com_table, origin_city, destination_city)
+        print('--------------------train_info-------------------------')
+        print(train_info)
+        # i = 0
+        # while True:
+        #     if lis == ' 输出信息有误，请重新输入' and i < 6:
+        #         lis = query_train_info(depart_date, url, com_table, origin_city, destination_city)
+        #         i+=1
+        #     else:
+        #         train_info = lis
+        #         print('--------------------train_info-------------------------')
+        #         print(train_info)
+        #         break
     if  trip_mode == "plane":
         with open('plane_code.txt', 'r', encoding='UTF-8') as l:
             text = l.read()
@@ -49,7 +55,7 @@ if __name__ == '__main__':
     print('--------------------json_2_info-------------------------')
     print(json_2_info)
 
-    json_2 = {'zone':'观音桥/九街',"location":"XX区","sl":"XX火车站","metro":"XX线"}
+    json_2 = {'zone':'两江新区、北部新区',"location":"XX区","sl":"XX火车站","metro":"XX线"}
     zone = json_2['zone']
     hotel_info = main_hotel(destination_city, zone)
     print('--------------------hotel_info-------------------------')

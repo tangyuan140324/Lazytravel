@@ -25,22 +25,48 @@ trainStr = json.dumps(train_part,ensure_ascii=False)
 planeStr = json.dumps(plane_json,ensure_ascii=False)
 
 
-with open('plane_code.txt','w') as k:
-    k.write(planeStr)
+dict_new = {value:key for key,value in train_part.items()}
 
-with open('pingyin_city.txt','w') as f:
-    f.write(str1)
+# with open('train_KVchage.txt','w') as k:
+#     k.write(json.dumps(dict_new,ensure_ascii=False))
 
-with open('number_city.txt','w') as g:
-    g.write(str2)
 
-with open('code_train.txt','w') as l:
-    l.write(trainStr)
-
+# with open('plane_code.txt','w') as k:
+#     k.write(planeStr)
+#
+# with open('pingyin_city.txt','w') as f:
+#     f.write(str1)
+#
+# with open('number_city.txt','w') as g:
+#     g.write(str2)
+#
+# with open('code_train.txt','w') as l:
+#     l.write(trainStr)
+#
 # with open('code_train.txt','r') as l:
 #     data = l.read().encode('utf-8')
-#
-#
+
+
 # dict_new = json.loads(data)
 # print(dict_new)
 # print(type(data))
+
+# seat_tables = {"A1":"硬座","A2":"软座","A3":"硬卧","A4":"软卧","A6":"高级软卧","F":"动卧","O":"二等座","WZ":"无座","M":"一等座","A9":"商务座特等座"}
+# table_list = list(seat_tables.keys())
+# data = {'3': '4260', 'A1': '¥251.0', '1': '2510', 'A4': '¥673.0', 'A3': '¥426.0', '4': '6730', 'OT': [], 'WZ': '¥251.0', 'train_no': '550000K282B7'}
+#
+# print(table_list)
+# price_list = []
+# for item in table_list:
+#     try:
+#         info = data[item]
+#         tnp = (seat_tables[item],info)
+#         price_list.append(tnp)
+#     except KeyError:
+#         print("NO SUCH KEY。")
+#         pass
+#     finally:
+#         price_table = dict(price_list)
+# print(price_table)
+
+
