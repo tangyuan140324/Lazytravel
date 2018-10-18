@@ -35,13 +35,13 @@ urban_transport = ''
 
 
 if __name__ == '__main__':
-    depart_date = '2018-10-18'
+    depart_date = '2018-10-19'
     origin_city = '南京'
     destination_city = '重庆'
     with open('code_train.txt', 'r', encoding='UTF-8') as j:
         text1 = j.read()  # .encode('utf-8')
     text = json.loads(text1)
-    with open('train_KVchage.txt', 'r') as u:
+    with open('train_KVchage.txt', 'r', encoding='UTF-8') as u:
         infod = u.read()
     com_table = json.loads(infod)
     url = get_query_url(text,depart_date,origin_city,destination_city)

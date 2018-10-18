@@ -9,17 +9,37 @@ import json
 
 from about_gaode import gaode_main
 from about_hotel import main_hotel, get_json_info
+from ctrip_xiecheng import get_sightAndjourneysUrl, summary_sights, get_journeysDetailUrl, summary_journeys
 from plane_XieCheng import get_plane_num, get_query_planeurl, query_plane_info
 from train_12306 import getStation, get_query_url, query_train_info
 
 if __name__ == '__main__':
-    json_1 = {"depart_date": "2018-10-18", "back_date": "2018-10-21", "origin_city": "南京",
+    json_1 = {"depart_date": "2018-10-20", "back_date": "2018-10-21", "origin_city": "南京",
               "destination_city": "重庆", "trip_mode": "train"}
 
     depart_date = json_1['depart_date']
     origin_city = json_1['origin_city']
     destination_city = json_1['destination_city']
     trip_mode = json_1['trip_mode']
+
+    keyword  = destination_city
+    basic_url = 'http://you.ctrip.com'
+    sight_url, journeys_url = get_sightAndjourneysUrl(keyword)
+    find_sight_info = []
+    for i in range(1, 3):
+        url_page = sight_url.split('.html')[0]+'/s0-p{}.html'.format(str(i))
+        sightsList = summary_sights(url_page)
+        find_sight_info.append(sightsList)
+    print('--------------------find_sight_info-------------------------')
+    print(find_sight_info)
+    every_urls = get_journeysDetailUrl(journeys_url)
+    find_journeys_info = []
+    for every_url_part in every_urls:
+        every_url = basic_url + every_url_part
+        tem = summary_journeys(every_url)
+        find_journeys_info.append(tem)
+    print('--------------------find_journeys_info-------------------------')
+    print(find_journeys_info)
     if trip_mode == "train":
         with open('code_train.txt', 'r', encoding='UTF-8') as j:
             text1 = j.read()  # .encode('utf-8')
