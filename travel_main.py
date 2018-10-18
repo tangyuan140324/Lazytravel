@@ -24,7 +24,7 @@ if __name__ == '__main__':
         with open('code_train.txt', 'r', encoding='UTF-8') as j:
             text1 = j.read()  # .encode('utf-8')
         text = json.loads(text1)
-        with open('train_KVchage.txt', 'r') as u:
+        with open('train_KVchage.txt', 'r', encoding='UTF-8') as u:
             infod = u.read()
         com_table = json.loads(infod)
         url = get_query_url(text, depart_date, origin_city, destination_city)
