@@ -45,8 +45,8 @@ def main(depart_date,origin_city,destination_city):
 
 if __name__ == '__main__':
     depart_date = '2018-10-21'
-    origin_city = '南京'
-    destination_city = '重庆'
+    origin_city = '郑州'
+    destination_city = '长春'
     # with open('code_train.txt', 'r', encoding='UTF-8') as j:
     #     text1 = j.read()  # .encode('utf-8')
     # text = json.loads(text1)

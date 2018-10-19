@@ -59,9 +59,7 @@ def get_query_url(text,depart_date,origin_city,destination_city):
         'purpose_codes=ADULT'
     ).format(date, from_station, to_station)
     #print(url)
-
     return url
-
 
 # 查询每趟列车的票价。
 def get_trainPrice(train_date,train_no,from_station_no,to_station_no,seat_types):
@@ -110,8 +108,7 @@ def query_train_info(depart_date,url, com_table,origin_city,destination_city):
     查询火车票信息：
     返回 信息查询列表
     '''
-
-    info_list = []
+    #info_list = []
     headers = {
         'host': "kyfw.12306.cn",
         'connection': "keep-alive",
@@ -126,21 +123,25 @@ def query_train_info(depart_date,url, com_table,origin_city,destination_city):
         #'cookie': "JSESSIONID=EB09BEC7A6C4A405CFC33F906E5F7A37; route=495c805987d0f5c8c84b14f60212447d; BIGipServerotn=31719946.64545.0000; RAIL_EXPIRATION=1539348054364; RAIL_DEVICEID=EFrAs10tQrANUiNSbzpPD67viZgHRY68PCFMzlPFeO6yaxQK0X308VTA6vdU47MSNMFAaBHffJDVEqeVZaTHvxsm99HZ2I9WU1um8GWYV9W2ErBY8VzspakOIgRLttxTE8TYQwA4yPw1mW-AJM6DzNBodyekwOqG; _jc_save_fromStation=%u5317%u4EAC%2CBJP; _jc_save_toStation=%u4E0A%u6D77%2CSHH; _jc_save_fromDate=2018-10-10; _jc_save_toDate=2018-10-09; _jc_save_wfdc_flag=dc"
     }
     r = requests.get(url, headers=headers, verify=False)
-    try:
-        # 获取返回的json数据里的data字段的result结果
-        raw_trains = r.json()['data']['result']
-    except KeyError:
-        raw_trains = 'ERROR : No response data return ,place try again'
-        #train_info = main(depart_date, origin_city, destination_city)
-        return  raw_trains
-    #print(raw_trains)
+    json_data = r.json()
+    i = 0
+    while True:
+        if json_data == {'c_name': 'CLeftTicketUrl', 'c_url': 'leftTicket/query', 'status': False} and i < 3:
+            r = requests.get(url, headers=headers, verify=False)
+            json_data = r.json()
+            i+=1
+            if i == 3:
+                raw_trains = 'ERROR : No response data return ,place try again'
+                return raw_trains
+        else:
+            raw_trains = json_data['data']['result']
+            break
     train_ticksList= []
     train_date = depart_date
     for raw_train in raw_trains:
         tem = {}
         # 循环遍历每辆列车的信息
         data_list = raw_train.split('|')
-        #print(data_list)
         '''
         train_no ,from_station_no , to_station_no and seat_types is for get price of this train. 
         '''

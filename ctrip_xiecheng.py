@@ -5,6 +5,7 @@
 # @Site : 
 # @File : ctrip_xiecheng.py
 # @Software: PyCharm
+from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,7 +14,7 @@ import re
 
 
 def get_sightAndjourneysUrl(keyword):
-    qure_city_url = 'http://m.ctrip.com/restapi/h5api/searchapp/search?action=autocomplete&source=globalonline&keyword={}'.format(keyword)
+    qure_city_url = 'http://m.ctrip.com/restapi/h5api/searchapp/search?action=autocomplete&source=globalonline&keyword={}'.format(quote(keyword))
     res = requests.get(qure_city_url).json()
     city_url = res['data'][0]['url']
     headers = {

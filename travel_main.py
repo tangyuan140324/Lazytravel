@@ -21,25 +21,6 @@ if __name__ == '__main__':
     origin_city = json_1['origin_city']
     destination_city = json_1['destination_city']
     trip_mode = json_1['trip_mode']
-
-    keyword  = destination_city
-    basic_url = 'http://you.ctrip.com'
-    sight_url, journeys_url = get_sightAndjourneysUrl(keyword)
-    find_sight_info = []
-    for i in range(1, 3):
-        url_page = sight_url.split('.html')[0]+'/s0-p{}.html'.format(str(i))
-        sightsList = summary_sights(url_page)
-        find_sight_info.append(sightsList)
-    print('--------------------find_sight_info-------------------------')
-    print(find_sight_info)
-    every_urls = get_journeysDetailUrl(journeys_url)
-    find_journeys_info = []
-    for every_url_part in every_urls:
-        every_url = basic_url + every_url_part
-        tem = summary_journeys(every_url)
-        find_journeys_info.append(tem)
-    print('--------------------find_journeys_info-------------------------')
-    print(find_journeys_info)
     time.sleep(0.5)
     if trip_mode == "train":
         with open('code_train.txt', 'r', encoding='UTF-8') as j:
@@ -73,6 +54,25 @@ if __name__ == '__main__':
         plane_info = query_plane_info(url)
         print('--------------------plane_info-------------------------')
         print(plane_info)
+    keyword  = destination_city
+    basic_url = 'http://you.ctrip.com'
+    sight_url, journeys_url = get_sightAndjourneysUrl(keyword)
+    find_sight_info = []
+    for i in range(1, 3):
+        url_page = sight_url.split('.html')[0]+'/s0-p{}.html'.format(str(i))
+        sightsList = summary_sights(url_page)
+        find_sight_info.append(sightsList)
+    print('--------------------find_sight_info-------------------------')
+    print(find_sight_info)
+    every_urls = get_journeysDetailUrl(journeys_url)
+    find_journeys_info = []
+    for every_url_part in every_urls:
+        every_url = basic_url + every_url_part
+        tem = summary_journeys(every_url)
+        find_journeys_info.append(tem)
+    print('--------------------find_journeys_info-------------------------')
+    print(find_journeys_info)
+
 
     json_2_info,regiony_comparison_table = get_json_info(destination_city)
     print('--------------------json_2_info-------------------------')
@@ -83,9 +83,9 @@ if __name__ == '__main__':
     print('--------------------hotel_info-------------------------')
     print(hotel_info)
     print('--------------------taxi or bus info-------------------------')
-    destination_city = '三亚'
-    or_address = '三亚凤凰机场'
-    de_address = '三亚四季海庭酒店'
+    destination_city = '长春'
+    or_address = '龙嘉国际机场'
+    de_address = '长春华丽达大酒店'
     bus_info = gaode_main(or_address, de_address, destination_city)
     print('--------------------bus_info-------------------------')
     print(bus_info)
