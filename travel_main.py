@@ -51,7 +51,10 @@ if __name__ == '__main__':
         url = get_query_url(text, depart_date, origin_city, destination_city)
         train_info = query_train_info(depart_date, url, com_table, origin_city, destination_city)
         print('--------------------train_info-------------------------')
-        print(train_info)
+        if isinstance(train_info,str):
+            print('\033[1;31m' + train_info + '\033[0m')
+        else:
+            print(train_info)
         # i = 0
         # while True:
         #     if lis == ' 输出信息有误，请重新输入' and i < 6:
