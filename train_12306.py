@@ -12,6 +12,7 @@ import json
 
 
 # 关闭https证书验证警告
+
 requests.packages.urllib3.disable_warnings()
 
 
@@ -125,9 +126,14 @@ def query_train_info(depart_date,url, com_table,origin_city,destination_city):
         #'cookie': "JSESSIONID=EB09BEC7A6C4A405CFC33F906E5F7A37; route=495c805987d0f5c8c84b14f60212447d; BIGipServerotn=31719946.64545.0000; RAIL_EXPIRATION=1539348054364; RAIL_DEVICEID=EFrAs10tQrANUiNSbzpPD67viZgHRY68PCFMzlPFeO6yaxQK0X308VTA6vdU47MSNMFAaBHffJDVEqeVZaTHvxsm99HZ2I9WU1um8GWYV9W2ErBY8VzspakOIgRLttxTE8TYQwA4yPw1mW-AJM6DzNBodyekwOqG; _jc_save_fromStation=%u5317%u4EAC%2CBJP; _jc_save_toStation=%u4E0A%u6D77%2CSHH; _jc_save_fromDate=2018-10-10; _jc_save_toDate=2018-10-09; _jc_save_wfdc_flag=dc"
     }
     #
-    r = requests.get(url, verify=False)
-    # 获取返回的json数据里的data字段的result结果
-    raw_trains = r.json()['data']['result']
+    try:
+        r = requests.get(url,headers = headers, verify=False)
+        # 获取返回的json数据里的data字段的result结果
+        raw_trains = r.json()['data']['result']
+    except KeyError:
+        raw_trains = 'No response data return ,place try again'
+        #train_info = main(depart_date, origin_city, destination_city)
+        return  raw_trains
     #print(raw_trains)
     train_ticksList= []
     train_date = depart_date

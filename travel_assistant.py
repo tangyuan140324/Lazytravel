@@ -5,7 +5,7 @@
 
 import json
 
-from train_12306 import getStation, get_query_url, query_train_info
+from train_12306 import get_query_url, query_train_info
 
 json_1 = {"depart_date":"","back_date":"","origin_city":"","destination_city":"","trip_mode":""}
 
@@ -31,13 +31,7 @@ destination_city = ''
 urban_transport = ''
 
 
-
-
-
-if __name__ == '__main__':
-    depart_date = '2018-10-19'
-    origin_city = '南京'
-    destination_city = '重庆'
+def main(depart_date,origin_city,destination_city):
     with open('code_train.txt', 'r', encoding='UTF-8') as j:
         text1 = j.read()  # .encode('utf-8')
     text = json.loads(text1)
@@ -47,4 +41,22 @@ if __name__ == '__main__':
     url = get_query_url(text,depart_date,origin_city,destination_city)
     print(url)
     lis = query_train_info(depart_date,url, com_table,origin_city,destination_city)
+    return lis
+
+if __name__ == '__main__':
+    depart_date = '2018-10-21'
+    origin_city = '南京'
+    destination_city = '重庆'
+    # with open('code_train.txt', 'r', encoding='UTF-8') as j:
+    #     text1 = j.read()  # .encode('utf-8')
+    # text = json.loads(text1)
+    # with open('train_KVchage.txt', 'r', encoding='UTF-8') as u:
+    #     infod = u.read()
+    # com_table = json.loads(infod)
+    # url = get_query_url(text,depart_date,origin_city,destination_city)
+    # print(url)
+    # lis = query_train_info(depart_date,url, com_table,origin_city,destination_city)
+    # print(lis)
+    lis = main(depart_date,origin_city,destination_city)
     print(lis)
+    pass

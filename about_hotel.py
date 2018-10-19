@@ -88,7 +88,9 @@ def get_json_info(city):
     # print(cityNumber)
     data = get_region_id(cityNumber)
     info = data.split('.jsonpResponse.suggestion=')[1]
-    json_data = json.loads(info)
+    # print(info)
+    # print(type(info))
+    json_data = eval(info)
     part_one = json_data['zoneId']['data']
     json_info = []
     lix = []
