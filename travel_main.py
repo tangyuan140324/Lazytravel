@@ -14,7 +14,8 @@ from plane_XieCheng import get_plane_num, get_query_planeurl, query_plane_info
 from train_12306 import getStation, get_query_url, query_train_info
 
 if __name__ == '__main__':
-    json_1 = {"depart_date": "2018-10-20", "back_date": "2018-10-21", "origin_city": "郑州",
+
+    json_1 = {"depart_date": "{}".format(time.strftime("%Y-%m-%d", time.localtime())), "back_date": "2018-10-26", "origin_city": "郑州",
               "destination_city": "长春", "trip_mode": "train"}
 
     depart_date = json_1['depart_date']
@@ -23,34 +24,28 @@ if __name__ == '__main__':
     trip_mode = json_1['trip_mode']
     time.sleep(0.5)
     if trip_mode == "train":
+        # read train dict about like: {"北京北": "VAP"}.
         with open('code_train.txt', 'r', encoding='UTF-8') as j:
-            text1 = j.read()  # .encode('utf-8')
-        text = json.loads(text1)
+            text_code_text = j.read()  # .encode('utf-8')
+        text = json.loads(text_code_text)
+        # read train dict but key and value is already change. like :{"BOP": "北京东"}
         with open('train_KVchage.txt', 'r', encoding='UTF-8') as u:
             infod = u.read()
         com_table = json.loads(infod)
         url = get_query_url(text, depart_date, origin_city, destination_city)
+        print(url)
         train_info = query_train_info(depart_date, url, com_table, origin_city, destination_city)
         print('--------------------train_info-------------------------')
         if isinstance(train_info,str):
             print('\033[1;31m' + train_info + '\033[0m')
         else:
             print(train_info)
-        # i = 0
-        # while True:
-        #     if lis == ' 输出信息有误，请重新输入' and i < 6:
-        #         lis = query_train_info(depart_date, url, com_table, origin_city, destination_city)
-        #         i+=1
-        #     else:
-        #         train_info = lis
-        #         print('--------------------train_info-------------------------')
-        #         print(train_info)
-        #         break
     if  trip_mode == "plane":
+        # read plane dict about like: {"上海": "SHA"},
         with open('plane_code.txt', 'r', encoding='UTF-8') as l:
             text = l.read()
-        text1 = json.loads(text)
-        url = get_query_planeurl(text1, depart_date, origin_city, destination_city)
+        plane_code_text = json.loads(text)
+        url = get_query_planeurl(plane_code_text, depart_date, origin_city, destination_city)
         plane_info = query_plane_info(url)
         print('--------------------plane_info-------------------------')
         print(plane_info)
@@ -87,7 +82,7 @@ if __name__ == '__main__':
     or_address = '龙嘉国际机场'
     de_address = '长春华丽达大酒店'
     bus_info = gaode_main(or_address, de_address, destination_city)
-    print('--------------------bus_info-------------------------')
+    #print('--------------------bus_info-------------------------')
     print(bus_info)
 
     pass

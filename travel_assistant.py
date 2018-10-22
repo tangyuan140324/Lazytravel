@@ -44,9 +44,9 @@ def main(depart_date,origin_city,destination_city):
     return lis
 
 if __name__ == '__main__':
-    depart_date = '2018-10-21'
-    origin_city = '郑州'
-    destination_city = '长春'
+    depart_date = '2018-10-25'
+    origin_city = '乌鲁木齐'
+    destination_city = '兰州'
     # with open('code_train.txt', 'r', encoding='UTF-8') as j:
     #     text1 = j.read()  # .encode('utf-8')
     # text = json.loads(text1)
