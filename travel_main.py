@@ -5,18 +5,20 @@
 # @Site : 
 # @File : travel_main.py
 # @Software: PyCharm
+
+
 import json
 import time
 from about_gaode import gaode_main
 from about_hotel import main_hotel, get_json_info
 from ctrip_xiecheng import get_sightAndjourneysUrl, summary_sights, get_journeysDetailUrl, summary_journeys
-from plane_XieCheng import get_plane_num, get_query_planeurl, query_plane_info
-from train_12306 import getStation, get_query_url, query_train_info
+from plane_XieCheng import get_query_planeurl, query_plane_info
+from train_12306 import get_query_url, query_train_info
 
 if __name__ == '__main__':
 
-    json_1 = {"depart_date": "{}".format(time.strftime("%Y-%m-%d", time.localtime())), "back_date": "2018-10-26", "origin_city": "郑州",
-              "destination_city": "长春", "trip_mode": "train"}
+    json_1 = {"depart_date": "{}".format(time.strftime("%Y-%m-%d", time.localtime())), "back_date": "2018-10-26", "origin_city": "西安",
+              "destination_city": "长春", "trip_mode": "plane"}
 
     depart_date = json_1['depart_date']
     origin_city = json_1['origin_city']
@@ -40,7 +42,7 @@ if __name__ == '__main__':
             print('\033[1;31m' + train_info + '\033[0m')
         else:
             print(train_info)
-    if  trip_mode == "plane":
+    if trip_mode == "plane":
         # read plane dict about like: {"上海": "SHA"},
         with open('plane_code.txt', 'r', encoding='UTF-8') as l:
             text = l.read()
@@ -84,5 +86,4 @@ if __name__ == '__main__':
     bus_info = gaode_main(or_address, de_address, destination_city)
     #print('--------------------bus_info-------------------------')
     print(bus_info)
-
     pass
